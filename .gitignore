@@ -1,0 +1,6 @@
+#Directory
+.idea/
+target/
+
+#Files
+PhotoParser.iml
