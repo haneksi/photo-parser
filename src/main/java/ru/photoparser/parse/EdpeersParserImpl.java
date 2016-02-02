@@ -4,8 +4,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.photoparser.entity.Album;
 import ru.photoparser.entity.Image;
 import ru.photoparser.entity.Portfolio;
@@ -17,18 +19,11 @@ import java.util.List;
 /*
 *  For site:  http://www.edpeers.com
 */
-
 public class EdpeersParserImpl implements Parser{
-    private  String URL;
-    @Autowired
+    private String URL;
     private Portfolio portfolio ;
 
-
     public EdpeersParserImpl() {
-        Document document = ParserManagement.getDocument(URL);
-        portfolio.setUrl(URL);
-        portfolio.setAuthor(document.title());
-        portfolio.setAlbums(getAlbums());
     }
 
     @Override
@@ -99,5 +94,10 @@ public class EdpeersParserImpl implements Parser{
         return listImages;
     }
 
-
+    private void init(){
+        Document document = ParserManagement.getDocument(URL);
+        portfolio.setUrl(URL);
+        portfolio.setAuthor(document.title());
+        portfolio.setAlbums(getAlbums());
+    }
 }
