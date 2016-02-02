@@ -4,24 +4,28 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.photoparser.entity.Album;
 import ru.photoparser.entity.Image;
 import ru.photoparser.entity.Portfolio;
 import ru.photoparser.util.ParserManagement;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
 /*
 *  For site:  http://www.edpeers.com
 */
+@Service
 public class EdpeersParserImpl implements Parser{
     private String URL;
-    private Portfolio portfolio ;
+
+    @Qualifier("portfolio")
+    @Autowired
+    private Portfolio portfolio;
+
 
     public EdpeersParserImpl() {
     }
@@ -94,6 +98,7 @@ public class EdpeersParserImpl implements Parser{
         return listImages;
     }
 
+    @PostConstruct
     private void init(){
         Document document = ParserManagement.getDocument(URL);
         portfolio.setUrl(URL);

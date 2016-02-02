@@ -24,9 +24,9 @@ public class ParserManagement {
         return doc;
     }
 
-    public static Object getBean(String beanName, Class clazz){
-        return new ClassPathXmlApplicationContext(new String[] {"context.xml"}).getBean(beanName, clazz);
-    }
+//    public static Object getBean(String beanName, Class clazz){
+//        return new ClassPathXmlApplicationContext(new String[] {"context.xml"}).getBean(beanName, clazz);
+//    }
 
 
 }
