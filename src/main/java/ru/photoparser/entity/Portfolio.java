@@ -49,4 +49,15 @@ public class Portfolio {
     public void setAlbums(List<Album> albums) {
         this.albums = albums;
     }
+
+
+    @Override
+    public String toString() {
+        return "Portfolio{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", author='" + author + '\'' +
+                ", albums=" + albums +
+                '}';
+    }
 }

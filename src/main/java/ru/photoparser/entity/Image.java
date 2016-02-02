@@ -67,4 +67,16 @@ public class Image {
     public void setAlt(String alt) {
         this.alt = alt;
     }
+
+    @Override
+    public String toString() {
+        return "Image{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", author='" + author + '\'' +
+                ", width='" + width + '\'' +
+                ", height='" + height + '\'' +
+                ", alt='" + alt + '\'' +
+                '}';
+    }
 }

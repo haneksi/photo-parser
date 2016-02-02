@@ -59,4 +59,15 @@ public class Album {
     public void setImages(List<Image> images) {
         this.images = images;
     }
+
+    @Override
+    public String toString() {
+        return "Album{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", author='" + author + '\'' +
+                ", title='" + title + '\'' +
+                ", images=" + images +
+                '}';
+    }
 }
