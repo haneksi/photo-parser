@@ -3,6 +3,7 @@ package ru.photoparser.util;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.IOException;
 
@@ -21,6 +22,10 @@ public class ParserManagement {
             //TODO Added log4j
         }
         return doc;
+    }
+
+    public static Object getBean(String beanName, Class clazz){
+        return new ClassPathXmlApplicationContext(new String[] {"context.xml"}).getBean(beanName, clazz);
     }
 
 
