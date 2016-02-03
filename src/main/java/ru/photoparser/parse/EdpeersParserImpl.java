@@ -20,7 +20,7 @@ import java.util.List;
 */
 @Service
 public class EdpeersParserImpl implements Parser{
-    private String URL;
+    private String URL = "http://www.edpeers.com";
 
     @Qualifier("portfolio")
     @Autowired

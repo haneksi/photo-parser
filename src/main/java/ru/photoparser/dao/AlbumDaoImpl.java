@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public class AlbumDaoImpl implements AbstractDao <Album> {
 
-    @Autowired
-    private SessionFactory sessionFactory;
+//    @Autowired
+//    private SessionFactory sessionFactory;
 
     @Override
     public Album getById(Long id) {

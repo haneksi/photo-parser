@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public class PortfolioDaoImpl implements AbstractDao<Portfolio>{
 
-    @Autowired
-    private SessionFactory sessionFactory;
+//    @Autowired
+//    private SessionFactory sessionFactory;
 
     @Override
     public Portfolio getById(Long id) {
