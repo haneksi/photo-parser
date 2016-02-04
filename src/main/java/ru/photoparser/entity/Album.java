@@ -3,20 +3,21 @@ package ru.photoparser.entity;
 import java.util.List;
 
 
-public class Album {
+public class Album{
     private Long id;
     private String url;
     private String author;
     private String title;
+
+    private Long portfolioId;
 
     private List<Image> images;
 
     public Album() {
     }
 
-    public Album(String url, String author, String title) {
+    public Album(String url, String title) {
         this.url = url;
-        this.author = author;
         this.title = title;
     }
 
@@ -58,6 +59,14 @@ public class Album {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public Long getPortfolioId() {
+        return portfolioId;
+    }
+
+    public void setPortfolioId(Long portfolioId) {
+        this.portfolioId = portfolioId;
     }
 
     @Override
