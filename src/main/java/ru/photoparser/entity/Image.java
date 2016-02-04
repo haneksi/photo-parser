@@ -1,7 +1,9 @@
 package ru.photoparser.entity;
 
+import javax.persistence.Entity;
 
-public class Image {
+
+public class Image{
     private Long id;
     private String url;
     private String author;
@@ -9,12 +11,14 @@ public class Image {
     private String height ;
     private String alt ;
 
+    private Long portfolioId;
+    private Long albumId;
+
     public Image() {
     }
 
-    public Image(String url, String author, String width, String height, String alt) {
+    public Image(String url, String width, String height, String alt) {
         this.url = url;
-        this.author = author;
         this.width = width;
         this.height = height;
         this.alt = alt;
@@ -66,6 +70,22 @@ public class Image {
 
     public void setAlt(String alt) {
         this.alt = alt;
+    }
+
+    public Long getPortfolioId() {
+        return portfolioId;
+    }
+
+    public void setPortfolioId(Long portfolioId) {
+        this.portfolioId = portfolioId;
+    }
+
+    public Long getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(Long albumId) {
+        this.albumId = albumId;
     }
 
     @Override
