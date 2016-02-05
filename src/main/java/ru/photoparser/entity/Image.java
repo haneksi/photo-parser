@@ -1,17 +1,35 @@
 package ru.photoparser.entity;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
-
+@Entity
+@Table(name = "image")
 public class Image{
-    private Long id;
-    private String url;
-    private String author;
-    private String width ;
-    private String height ;
-    private String alt ;
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "url")
+    private String url;
+
+    @Column(name = "author")
+    private String author;
+
+    @Column(name = "width")
+    private String width;
+
+    @Column(name = "height")
+    private String height;
+
+    @Column(name = "alt")
+    private String alt;
+
+    @Column(name = "portfolio_id")
     private Long portfolioId;
+
+    @Column(name = "album_id")
     private Long albumId;
 
     public Image() {
