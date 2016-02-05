@@ -18,7 +18,7 @@ import java.util.List;
 /*
 *  For site:  http://www.edpeers.com
 */
-@Service
+@Service("edpeersParser")
 public class EdpeersParserImpl implements Parser{
     private final String URL = "http://www.edpeers.com";
 
