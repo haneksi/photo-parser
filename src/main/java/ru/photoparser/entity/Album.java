@@ -1,16 +1,30 @@
 package ru.photoparser.entity;
 
+import javax.persistence.*;
 import java.util.List;
 
-
+@Entity
+@Table(name = "album")
 public class Album{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "url")
     private String url;
+
+    @Column(name = "author")
     private String author;
+
+    @Column(name = "title")
     private String title;
 
+    @Column(name = "portfolio_id")
     private Long portfolioId;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Image> images;
 
     public Album() {
