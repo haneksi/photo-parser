@@ -9,7 +9,7 @@ import ru.photoparser.entity.Portfolio;
 
 import java.util.List;
 
-@Service
+@Service("portfolioService")
 public class PortfolioService {
 
     @Qualifier("portfolioDaoImpl")
