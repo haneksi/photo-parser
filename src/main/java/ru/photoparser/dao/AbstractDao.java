@@ -9,9 +9,9 @@ public interface AbstractDao<T> {
 
     List<T> findAll();
 
-    T create(T entyty);
+    void create(T entyty);
 
-    T update(T entity);
+    void update(T entity);
 
     void delete(T entity);
 
