@@ -18,9 +18,9 @@ import java.util.List;
 /*
 *  For site:  http://www.edpeers.com
 */
-@Service
+@Service("edpeersParser")
 public class EdpeersParserImpl implements Parser{
-    private String URL = "http://www.edpeers.com";
+    private final String URL = "http://www.edpeers.com";
 
     @Qualifier("portfolio")
     @Autowired
@@ -43,10 +43,6 @@ public class EdpeersParserImpl implements Parser{
         return URL;
     }
 
-    public void setURL(String URL) {
-        this.URL = URL;
-    }
-
     @Override
     public List<Image> getAllImages() {
         List<Image> images = new ArrayList<Image>();
@@ -67,7 +63,7 @@ public class EdpeersParserImpl implements Parser{
 
         Elements links = document.select("span.read-more-wrap").select("a[href]");
         for (Element el: links ){
-            albums.add(new Album(el.attr("href"), portfolio.getAuthor(), el.attr("title")));
+            albums.add(new Album(el.attr("href"), el.attr("title")));
         }
 
         for (Album album: albums){
@@ -90,7 +86,7 @@ public class EdpeersParserImpl implements Parser{
             String height = image.attr("height");
             String alt = image.attr("alt");
             if(link.endsWith(".jpg")) {
-                listImages.add(new Image(link, portfolio.getAuthor(), width, height, alt));
+                listImages.add(new Image(link, width, height, alt));
             }
         }
         album.setImages(listImages);

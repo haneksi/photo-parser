@@ -10,8 +10,8 @@ import java.util.List;
 @Repository
 public class ImageDaoImpl implements AbstractDao<Image>{
 
-//    @Autowired
-//    private SessionFactory sessionFactory;
+    @Autowired
+    private SessionFactory sessionFactory;
 
     @Override
     public Image getById(Long id) {
@@ -24,13 +24,13 @@ public class ImageDaoImpl implements AbstractDao<Image>{
     }
 
     @Override
-    public Image create(Image entyty) {
-        return null;
+    public void create(Image entyty) {
+
     }
 
     @Override
-    public Image update(Image entity) {
-        return null;
+    public void update(Image entity) {
+
     }
 
     @Override

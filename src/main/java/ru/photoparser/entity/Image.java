@@ -1,20 +1,42 @@
 package ru.photoparser.entity;
 
+import javax.persistence.*;
 
-public class Image {
+@Entity
+@Table(name = "image")
+public class Image{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
+
+    @Column(name = "url")
     private String url;
+
+    @Column(name = "author")
     private String author;
-    private String width ;
-    private String height ;
-    private String alt ;
+
+    @Column(name = "width")
+    private String width;
+
+    @Column(name = "height")
+    private String height;
+
+    @Column(name = "alt")
+    private String alt;
+
+    @Column(name = "portfolio_id")
+    private Long portfolioId;
+
+    @Column(name = "album_id")
+    private Long albumId;
 
     public Image() {
     }
 
-    public Image(String url, String author, String width, String height, String alt) {
+    public Image(String url, String width, String height, String alt) {
         this.url = url;
-        this.author = author;
         this.width = width;
         this.height = height;
         this.alt = alt;
@@ -66,6 +88,22 @@ public class Image {
 
     public void setAlt(String alt) {
         this.alt = alt;
+    }
+
+    public Long getPortfolioId() {
+        return portfolioId;
+    }
+
+    public void setPortfolioId(Long portfolioId) {
+        this.portfolioId = portfolioId;
+    }
+
+    public Long getAlbumId() {
+        return albumId;
+    }
+
+    public void setAlbumId(Long albumId) {
+        this.albumId = albumId;
     }
 
     @Override

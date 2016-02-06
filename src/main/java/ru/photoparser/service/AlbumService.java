@@ -3,12 +3,14 @@ package ru.photoparser.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.photoparser.dao.AlbumDaoImpl;
 import ru.photoparser.entity.Album;
 
 import java.util.List;
 
+@Service("albumService")
 public class AlbumService {
 
 
