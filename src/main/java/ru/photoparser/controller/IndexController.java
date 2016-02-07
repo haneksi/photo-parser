@@ -22,9 +22,9 @@ public class IndexController {
     @Autowired
     private EdpeersParserImpl edpeersParser;
 
-//    @Qualifier("portfolioService")
-//    @Autowired
-//    private PortfolioService portfolioService;
+    @Qualifier("portfolioService")
+    @Autowired
+    private PortfolioService portfolioService;
 
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
@@ -32,7 +32,7 @@ public class IndexController {
         List<Image> images = edpeersParser.getAllImages();
         model.addAttribute("images",  images);
 
-//        portfolioService.create(edpeersParser.getPortfolio());
+        portfolioService.create(edpeersParser.getPortfolio());
 
         return "index";
     }
