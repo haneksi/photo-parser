@@ -26,7 +26,7 @@ public class PortfolioDaoImpl implements AbstractDao<Portfolio>{
     @Override
     public List<Portfolio> findAll() {
         Session currentSession = sessionFactory.getCurrentSession();
-        List <Portfolio> list = currentSession.createQuery("from portfolio").list();
+        List <Portfolio> list = currentSession.createQuery("from Portfolio").list();
         return list;
     }
 
