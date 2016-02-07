@@ -1,5 +1,6 @@
 package ru.photoparser.dao;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,26 +16,34 @@ public class ImageDaoImpl implements AbstractDao<Image>{
 
     @Override
     public Image getById(Long id) {
-        return null;
+        Session currentSession = sessionFactory.getCurrentSession();
+        Image image = currentSession.load(Image.class, id);
+        return image;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Image> findAll() {
-        return null;
+        Session currentSession = sessionFactory.getCurrentSession();
+        List <Image> list = currentSession.createQuery("from Image").list();
+        return list;
     }
 
     @Override
     public void create(Image entyty) {
-
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.persist(entyty);
     }
 
     @Override
     public void update(Image entity) {
-
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.update(entity);
     }
 
     @Override
     public void delete(Image entity) {
-
+        Session currentSession = sessionFactory.getCurrentSession();
+        currentSession.delete(entity);
     }
 }
