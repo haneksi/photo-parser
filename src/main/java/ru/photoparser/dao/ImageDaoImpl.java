@@ -15,9 +15,9 @@ public class ImageDaoImpl implements AbstractDao<Image>{
     private SessionFactory sessionFactory;
 
     @Override
-    public Image getById(Long id) {
+    public Image getById(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Image image = currentSession.load(Image.class, id);
+        Image image = currentSession.get(Image.class, id);
         return image;
     }
 

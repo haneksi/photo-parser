@@ -15,9 +15,9 @@ public class AlbumDaoImpl implements AbstractDao <Album> {
     private SessionFactory sessionFactory;
 
     @Override
-    public Album getById(Long id) {
+    public Album getById(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Album album = currentSession.load(Album.class, id);
+        Album album = currentSession.get(Album.class, id);
         return album;
     }
 

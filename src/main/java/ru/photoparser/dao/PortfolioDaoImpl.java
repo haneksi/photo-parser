@@ -16,9 +16,9 @@ public class PortfolioDaoImpl implements AbstractDao<Portfolio>{
     private SessionFactory sessionFactory;
 
     @Override
-    public Portfolio getById(Long id) {
+    public Portfolio getById(Integer id) {
         Session currentSession = sessionFactory.getCurrentSession();
-        Portfolio portfolio = currentSession.load(Portfolio.class, id);
+        Portfolio portfolio = currentSession.get(Portfolio.class, id);
         return portfolio;
     }
 

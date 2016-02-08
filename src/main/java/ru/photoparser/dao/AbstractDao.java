@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface AbstractDao<T> {
 
-    T getById(Long id);
+    T getById(Integer id);
 
     List<T> findAll();
 
