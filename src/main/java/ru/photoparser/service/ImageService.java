@@ -39,7 +39,7 @@ public class ImageService {
     }
 
     @Transactional
-    public Image getById(Long imageId) {
+    public Image getById(Integer imageId) {
         return imageDao.getById(imageId);
     }
 }

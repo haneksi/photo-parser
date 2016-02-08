@@ -37,7 +37,7 @@ public class PortfolioService {
     }
 
     @Transactional
-    public Portfolio getById(Long portfolioId) {
+    public Portfolio getById(Integer portfolioId) {
         return portfolioDao.getById(portfolioId);
     }
 

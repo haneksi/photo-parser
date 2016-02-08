@@ -39,7 +39,7 @@ public class AlbumService {
     }
 
     @Transactional
-    public Album getById(Long albumId) {
+    public Album getById(Integer albumId) {
         return albumDao.getById(albumId);
     }
 }
