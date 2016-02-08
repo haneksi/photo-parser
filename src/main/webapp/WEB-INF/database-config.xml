@@ -24,10 +24,10 @@
         <property name="packagesToScan" value="ru.photoparser.entity"/>
         <property name="hibernateProperties">
             <value>
-                hibernate.dialect=org.hibernate.dialect.MySQL5InnoDBDialect
+                hibernate.dialect=org.hibernate.dialect.MySQLDialect
                 hibernate.show_sql=true
-                hibernate.id.new_generator_mappings=false
-                <!--hibernate.hbm2ddl.auto=create-->
+                hibernate.hbm2ddl.auto=update
+                <!--hibernate.current_session_context_class=thread-->
             </value>
         </property>
     </bean>
