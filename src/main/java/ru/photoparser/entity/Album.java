@@ -10,7 +10,7 @@ public class Album{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
 
     @Column(name = "url")
     private String url;
@@ -21,10 +21,11 @@ public class Album{
     @Column(name = "title")
     private String title;
 
-    @Column(name = "portfolio_id")
-    private Long portfolioId;
+    @ManyToOne
+    @JoinColumn(name = "portfolio_id")
+    Portfolio portfolio;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Image> images;
 
     public Album() {
@@ -35,11 +36,11 @@ public class Album{
         this.title = title;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -75,12 +76,12 @@ public class Album{
         this.images = images;
     }
 
-    public Long getPortfolioId() {
-        return portfolioId;
+    public Portfolio getPortfolio() {
+        return portfolio;
     }
 
-    public void setPortfolioId(Long portfolioId) {
-        this.portfolioId = portfolioId;
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
     }
 
     @Override

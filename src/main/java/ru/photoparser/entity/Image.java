@@ -9,7 +9,7 @@ public class Image{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
 
     @Column(name = "url")
     private String url;
@@ -26,11 +26,13 @@ public class Image{
     @Column(name = "alt")
     private String alt;
 
-    @Column(name = "portfolio_id")
-    private Long portfolioId;
+    @ManyToOne
+    @JoinColumn(name = "portfolio_id")
+    private Portfolio portfolio;
 
-    @Column(name = "album_id")
-    private Long albumId;
+    @ManyToOne
+    @JoinColumn(name = "album_id")
+    private Album album;
 
     public Image() {
     }
@@ -42,11 +44,11 @@ public class Image{
         this.alt = alt;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -90,20 +92,20 @@ public class Image{
         this.alt = alt;
     }
 
-    public Long getPortfolioId() {
-        return portfolioId;
+    public Portfolio getPortfolio() {
+        return portfolio;
     }
 
-    public void setPortfolioId(Long portfolioId) {
-        this.portfolioId = portfolioId;
+    public void setPortfolio(Portfolio portfolio) {
+        this.portfolio = portfolio;
     }
 
-    public Long getAlbumId() {
-        return albumId;
+    public Album getAlbum() {
+        return album;
     }
 
-    public void setAlbumId(Long albumId) {
-        this.albumId = albumId;
+    public void setAlbum(Album album) {
+        this.album = album;
     }
 
     @Override

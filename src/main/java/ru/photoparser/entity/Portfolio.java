@@ -10,7 +10,7 @@ public class Portfolio{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private Long id;
+    private Integer id;
 
     @Column(name = "url")
     private String url;
@@ -18,7 +18,9 @@ public class Portfolio{
     @Column(name = "author")
     private String author;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "portfolio",
+               cascade = CascadeType.ALL,
+               fetch = FetchType.EAGER)
     private List<Album> albums;
 
     public Portfolio() {
@@ -29,11 +31,11 @@ public class Portfolio{
         this.url = url;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
