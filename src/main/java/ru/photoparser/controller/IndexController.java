@@ -1,5 +1,6 @@
 package ru.photoparser.controller;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -36,12 +37,12 @@ public class IndexController {
 
 //        portfolioService.create(edpeersParser.getPortfolio());
 
-//        Portfolio id = portfolioService.getById(1423);
-//        for (Album album : id.getAlbums()) {
-//            System.out.println(album.getId().toString());
-//            System.out.println(album.getAuthor().toString());
-//            System.out.println(album.getPortfolio().getId().toString());
-//        }
+        Portfolio id = portfolioService.getById(171);
+        for (Album album : id.getAlbums()) {
+            System.out.println(album.getId().toString());
+            System.out.println(album.getAuthor().toString());
+            System.out.println(album.getPortfolio().getId().toString());
+        }
 
         return "index";
     }

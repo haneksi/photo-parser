@@ -9,7 +9,7 @@ public class Portfolio{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "portfolio_id")
     private Integer id;
 
     @Column(name = "url")
@@ -18,9 +18,10 @@ public class Portfolio{
     @Column(name = "author")
     private String author;
 
-    @OneToMany(mappedBy = "portfolio",
+    @OneToMany(targetEntity = Album.class,
+               mappedBy = "portfolio",
                cascade = CascadeType.ALL,
-               fetch = FetchType.EAGER)
+               fetch = FetchType.LAZY)
     private List<Album> albums;
 
     public Portfolio() {

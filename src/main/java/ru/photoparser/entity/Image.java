@@ -8,7 +8,7 @@ public class Image{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "image_id")
     private Integer id;
 
     @Column(name = "url")
@@ -26,11 +26,11 @@ public class Image{
     @Column(name = "alt")
     private String alt;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Portfolio.class)
     @JoinColumn(name = "portfolio_id")
     private Portfolio portfolio;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Album.class)
     @JoinColumn(name = "album_id")
     private Album album;
 

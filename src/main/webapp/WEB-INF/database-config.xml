@@ -27,7 +27,7 @@
                 hibernate.dialect=org.hibernate.dialect.MySQLDialect
                 hibernate.show_sql=true
                 hibernate.hbm2ddl.auto=update
-                <!--hibernate.current_session_context_class=thread-->
+                hibernate.enable_lazy_load_no_trans=true
             </value>
         </property>
     </bean>

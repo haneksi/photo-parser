@@ -9,7 +9,7 @@ public class Album{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "album_id")
     private Integer id;
 
     @Column(name = "url")
@@ -21,11 +21,14 @@ public class Album{
     @Column(name = "title")
     private String title;
 
-    @ManyToOne
+    @ManyToOne(targetEntity = Portfolio.class)
     @JoinColumn(name = "portfolio_id")
     Portfolio portfolio;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Image.class,
+               mappedBy = "album",
+               cascade = CascadeType.ALL,
+               fetch = FetchType.LAZY)
     private List<Image> images;
 
     public Album() {
