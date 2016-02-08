@@ -2,42 +2,44 @@ create database if not exists photoparserdb;
 use photoparserdb;
 
 create table if not exists portfolio (
-    id int NOT NULL AUTO_INCREMENT ,
+    portfolio_id int NOT NULL AUTO_INCREMENT,
     url varchar(255) NOT NULL,
     author varchar(255),
-    index(id),
-    index(author),
-    primary key (id)
+    primary key(portfolio_id)
 )ENGINE=InnoDB CHARACTER SET=UTF8;
 
 create table if not exists album(
-    id int NOT NULL AUTO_INCREMENT,
+    album_id int NOT NULL AUTO_INCREMENT,
     url varchar(255) NOT NULL,
     author varchar(255),
     title varchar(255),
-    portfolio_id int,
-    index(portfolio_id),
-    index(author),
-    foreign key (author) references portfolio(author),
-    foreign key (portfolio_id) references portfolio(id),
-    primary key(id)
+    portfolio_id int not null,
+    CONSTRAINT album_portfolio_fk
+    FOREIGN KEY (portfolio_id)
+    REFERENCES portfolio (portfolio_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    primary key(album_id)
 )ENGINE=InnoDB CHARACTER SET=UTF8;
 
 create table if not exists image(
-    id int NOT NULL AUTO_INCREMENT,
+    image_id int NOT NULL AUTO_INCREMENT,
     url varchar(255) NOT NULL,
     author varchar(255),
     width int,
     height int,
     alt varchar(255),
-    portfolio_id int,
-    album_id int,
-    index(portfolio_id),
-    index(album_id),
-    index(author),
-    foreign key(author) references portfolio(author),
-    foreign key(portfolio_id) references portfolio(id),
-    foreign key(album_id) references album(id),
-    primary key(id)
+    portfolio_id int not null,
+    album_id int not null,
+    CONSTRAINT image_portfolio_fk
+    FOREIGN KEY (portfolio_id)
+    REFERENCES portfolio (portfolio_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    CONSTRAINT image_album_fk
+    FOREIGN KEY (album_id)
+    REFERENCES album (album_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    primary key(image_id)
 )ENGINE=InnoDB CHARACTER SET=UTF8;
-
