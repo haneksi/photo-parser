@@ -5,6 +5,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ru.photoparser.entity.Album;
 import ru.photoparser.entity.Image;
@@ -19,8 +20,12 @@ import java.util.List;
 *  For site:  http://www.edpeers.com
 */
 @Service("edpeersParser")
+@Scope("singleton")
 public class EdpeersParserImpl implements Parser{
     private final String URL = "http://www.edpeers.com";
+    private final Document document = ParserManagement.getDocument(URL);
+    private final String author = document.title();
+
 
     @Qualifier("portfolio")
     @Autowired
@@ -32,6 +37,7 @@ public class EdpeersParserImpl implements Parser{
 
     @Override
     public Portfolio getPortfolio() {
+        parsing();
         return portfolio;
     }
 
@@ -43,62 +49,53 @@ public class EdpeersParserImpl implements Parser{
         return URL;
     }
 
-    @Override
-    public List<Image> getAllImages() {
-        List<Image> images = new ArrayList<Image>();
 
-        for (Album album : portfolio.getAlbums()) {
-            for (Image image : album.getImages()) {
-                images.add(image);
-            }
-        }
-        return images;
-    }
-
-    @Override
-    public List<Album> getAlbums() {
-        String url = portfolio.getUrl();
-        Document document = ParserManagement.getDocument(url);
+    private void parsing(){
+        this.portfolio.setUrl(URL);
+        this.portfolio.setAuthor(author);
         List<Album> albums = new ArrayList<Album>();
-
         Elements links = document.select("span.read-more-wrap").select("a[href]");
         for (Element el: links ){
-            albums.add(new Album(el.attr("href"), el.attr("title")));
+            String url = el.attr("href");
+            String title = el.attr("title");
+            Album album = new Album();
+            album.setAuthor(author);
+            album.setTitle(title);
+            album.setUrl(url);
+            List<Image> imagesToAlbum = getImagesToAlbum(album);
+            album.setImages(imagesToAlbum);
+            albums.add(album);
         }
-
-        for (Album album: albums){
-            album.setImages(getImagesToAlbum(album));
-        }
-
-        return albums;
+        portfolio.setAlbums(albums);
     }
 
-    @Override
-    public List<Image> getImagesToAlbum(Album album) {
+    private List<Image> getImagesToAlbum(Album album) {
         String albumUrl = album.getUrl();
-        Document document = ParserManagement.getDocument(albumUrl);
+        Document imagesDocument = ParserManagement.getDocument(albumUrl);
         List<Image> listImages = new ArrayList<Image>();
-        Elements images = document.getElementsByAttribute("data-lazyload-src");
 
-        for (Element image: images){
-            String link = image.attr("data-lazyload-src");
-            String width = image.attr("width");
-            String height = image.attr("height");
-            String alt = image.attr("alt");
+        Elements images = imagesDocument.getElementsByAttribute("data-lazyload-src");
+
+        for (Element element : images){
+            String link = element.attr("data-lazyload-src");
+            String width = element.attr("width");
+            String height = element.attr("height");
+            String alt = element.attr("alt");
             if(link.endsWith(".jpg")) {
-                listImages.add(new Image(link, width, height, alt));
+                Image image = new Image();
+                image.setUrl(link);
+                image.setWidth(width);
+                image.setHeight(height);
+                image.setAlt(alt);
+                image.setAuthor(author);
+                listImages.add(image);
             }
         }
+
         album.setImages(listImages);
 
         return listImages;
     }
 
-    @PostConstruct
-    private void init(){
-        Document document = ParserManagement.getDocument(URL);
-        portfolio.setUrl(URL);
-        portfolio.setAuthor(document.title());
-        portfolio.setAlbums(getAlbums());
-    }
+
 }
