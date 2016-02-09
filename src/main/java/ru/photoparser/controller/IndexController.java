@@ -13,6 +13,7 @@ import ru.photoparser.entity.Portfolio;
 import ru.photoparser.parse.EdpeersParserImpl;
 import ru.photoparser.service.PortfolioService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,19 +31,18 @@ public class IndexController {
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String printHello(ModelMap model) {
-        List<Image> images = edpeersParser.getAllImages();
+        Portfolio portfolio = edpeersParser.getPortfolio();
+        List<Album> albums = portfolio.getAlbums();
+        List<Image> images = new ArrayList<>();
+        for (Album album : albums) {
+            images.addAll(album.getImages());
+        }
+
         model.addAttribute("images",  images);
 
-//        System.out.println(edpeersParser.getPortfolio().getAuthor());
+//        portfolioService.create(portfolio);
 
-//        portfolioService.create(edpeersParser.getPortfolio());
-
-        Portfolio id = portfolioService.getById(171);
-        for (Album album : id.getAlbums()) {
-            System.out.println(album.getId().toString());
-            System.out.println(album.getAuthor().toString());
-            System.out.println(album.getPortfolio().getId().toString());
-        }
+        Portfolio byId = portfolioService.getById(9);
 
         return "index";
     }
