@@ -8,7 +8,7 @@ import java.util.List;
 public class Portfolio{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "portfolio_id")
     private Integer id;
 
@@ -21,7 +21,7 @@ public class Portfolio{
     @OneToMany(targetEntity = Album.class,
                mappedBy = "portfolio",
                cascade = CascadeType.ALL,
-               fetch = FetchType.LAZY)
+               fetch = FetchType.EAGER)
     private List<Album> albums;
 
     public Portfolio() {

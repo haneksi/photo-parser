@@ -8,7 +8,7 @@ import java.util.List;
 public class Album{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "album_id")
     private Integer id;
 
@@ -28,7 +28,7 @@ public class Album{
     @OneToMany(targetEntity = Image.class,
                mappedBy = "album",
                cascade = CascadeType.ALL,
-               fetch = FetchType.LAZY)
+               fetch = FetchType.EAGER)
     private List<Image> images;
 
     public Album() {
