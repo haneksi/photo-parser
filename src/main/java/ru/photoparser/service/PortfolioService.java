@@ -1,10 +1,12 @@
 package ru.photoparser.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.photoparser.dao.PortfolioDaoImpl;
+import ru.photoparser.entity.Album;
 import ru.photoparser.entity.Portfolio;
 
 import java.util.List;
@@ -33,12 +35,27 @@ public class PortfolioService {
 
     @Transactional
     public List<Portfolio> getAll() {
-        return portfolioDao.findAll();
+        List<Portfolio> listPortfolio = portfolioDao.findAll();
+        for (Portfolio portfolio : listPortfolio) {
+            List<Album> albums = portfolio.getAlbums();
+            Hibernate.initialize(albums);
+            for (Album album : albums) {
+                Hibernate.initialize(album.getImages());
+            }
+        }
+        return listPortfolio;
     }
 
     @Transactional
     public Portfolio getById(Integer portfolioId) {
-        return portfolioDao.getById(portfolioId);
+        Portfolio portfolio = portfolioDao.getById(portfolioId);
+        List<Album> albums = portfolio.getAlbums();
+
+        Hibernate.initialize(albums);
+        for (Album album : albums) {
+            Hibernate.initialize(album.getImages());
+        }
+        return portfolio;
     }
 
 }
