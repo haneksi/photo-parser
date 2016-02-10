@@ -40,10 +40,6 @@ public class IndexController {
 
         model.addAttribute("images",  images);
 
-//        portfolioService.create(portfolio);
-
-        Portfolio byId = portfolioService.getById(9);
-
         return "index";
     }
 }
