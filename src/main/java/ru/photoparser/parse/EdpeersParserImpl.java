@@ -59,6 +59,7 @@ public class EdpeersParserImpl implements Parser{
             String url = el.attr("href");
             String title = el.attr("title");
             Album album = new Album();
+            album.setPortfolio(portfolio);
             album.setAuthor(author);
             album.setTitle(title);
             album.setUrl(url);
@@ -83,6 +84,8 @@ public class EdpeersParserImpl implements Parser{
             String alt = element.attr("alt");
             if(link.endsWith(".jpg")) {
                 Image image = new Image();
+                image.setAlbum(album);
+                image.setPortfolio(portfolio);
                 image.setUrl(link);
                 image.setWidth(width);
                 image.setHeight(height);
