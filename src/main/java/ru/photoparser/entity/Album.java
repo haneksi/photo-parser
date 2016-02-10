@@ -28,7 +28,7 @@ public class Album{
     @OneToMany(targetEntity = Image.class,
                mappedBy = "album",
                cascade = CascadeType.ALL,
-               fetch = FetchType.EAGER)
+               fetch = FetchType.LAZY)
     private List<Image> images;
 
     public Album() {
@@ -97,4 +97,5 @@ public class Album{
                 ", images=" + images +
                 '}';
     }
+
 }

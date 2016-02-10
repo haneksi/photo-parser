@@ -21,7 +21,7 @@ public class Portfolio{
     @OneToMany(targetEntity = Album.class,
                mappedBy = "portfolio",
                cascade = CascadeType.ALL,
-               fetch = FetchType.EAGER)
+               fetch = FetchType.LAZY)
     private List<Album> albums;
 
     public Portfolio() {
@@ -74,4 +74,5 @@ public class Portfolio{
                 ", albums=" + albums +
                 '}';
     }
+
 }
