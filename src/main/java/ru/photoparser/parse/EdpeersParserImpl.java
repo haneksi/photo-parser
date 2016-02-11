@@ -35,9 +35,8 @@ public class EdpeersParserImpl implements Parser{
     public EdpeersParserImpl() {
     }
 
-    @Override
+
     public Portfolio getPortfolio() {
-        parsing();
         return portfolio;
     }
 
@@ -49,8 +48,8 @@ public class EdpeersParserImpl implements Parser{
         return URL;
     }
 
-
-    private void parsing(){
+    @Override
+    public Portfolio parsing(){
         this.portfolio.setUrl(URL);
         this.portfolio.setAuthor(author);
         List<Album> albums = new ArrayList<Album>();
@@ -68,6 +67,7 @@ public class EdpeersParserImpl implements Parser{
             albums.add(album);
         }
         portfolio.setAlbums(albums);
+        return portfolio;
     }
 
     private List<Image> getImagesToAlbum(Album album) {

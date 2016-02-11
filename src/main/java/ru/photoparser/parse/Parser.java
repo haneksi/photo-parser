@@ -6,6 +6,6 @@ import ru.photoparser.entity.Portfolio;
 
 public interface Parser {
 
-    Portfolio getPortfolio();
+    Portfolio parsing();
 
 }
