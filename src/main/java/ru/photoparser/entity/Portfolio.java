@@ -75,4 +75,26 @@ public class Portfolio{
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Portfolio portfolio = (Portfolio) o;
+
+
+        if (!url.equals(portfolio.url)) return false;
+        if (!author.equals(portfolio.author)) return false;
+        return albums.equals(portfolio.albums);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = url.hashCode();
+
+        result = 31 * result + author.hashCode();
+        result = 31 * result + albums.hashCode();
+        return result;
+    }
 }

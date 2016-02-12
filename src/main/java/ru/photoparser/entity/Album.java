@@ -98,4 +98,30 @@ public class Album{
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Album album = (Album) o;
+
+
+        if (!url.equals(album.url)) return false;
+        if (!author.equals(album.author)) return false;
+        if (!title.equals(album.title)) return false;
+        if (!portfolio.equals(album.portfolio)) return false;
+        return images.equals(album.images);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = url.hashCode();
+
+        result = 31 * result + author.hashCode();
+        result = 31 * result + title.hashCode();
+        result = 31 * result + portfolio.hashCode();
+        result = 31 * result + images.hashCode();
+        return result;
+    }
 }

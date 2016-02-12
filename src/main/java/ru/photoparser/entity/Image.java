@@ -120,4 +120,34 @@ public class Image{
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Image image = (Image) o;
+
+
+        if (!url.equals(image.url)) return false;
+        if (!author.equals(image.author)) return false;
+        if (!width.equals(image.width)) return false;
+        if (!height.equals(image.height)) return false;
+        if (!alt.equals(image.alt)) return false;
+        if (!portfolio.equals(image.portfolio)) return false;
+        return album.equals(image.album);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = url.hashCode();
+
+        result = 31 * result + author.hashCode();
+        result = 31 * result + width.hashCode();
+        result = 31 * result + height.hashCode();
+        result = 31 * result + alt.hashCode();
+        result = 31 * result + portfolio.hashCode();
+        result = 31 * result + album.hashCode();
+        return result;
+    }
 }
