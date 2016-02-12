@@ -62,43 +62,12 @@ public class EdpeersParserImpl implements Parser{
             album.setAuthor(author);
             album.setTitle(title);
             album.setUrl(url);
-            List<Image> imagesToAlbum = getImagesToAlbum(album);
-            album.setImages(imagesToAlbum);
+            List<Image> images = ParserManagement.getImagesToAlbumWP(album, portfolio, author);
+            album.setImages(images);
             albums.add(album);
         }
         portfolio.setAlbums(albums);
         return portfolio;
     }
-
-    private List<Image> getImagesToAlbum(Album album) {
-        String albumUrl = album.getUrl();
-        Document imagesDocument = ParserManagement.getDocument(albumUrl);
-        List<Image> listImages = new ArrayList<Image>();
-
-        Elements images = imagesDocument.getElementsByAttribute("data-lazyload-src");
-
-        for (Element element : images){
-            String link = element.attr("data-lazyload-src");
-            String width = element.attr("width");
-            String height = element.attr("height");
-            String alt = element.attr("alt");
-            if(link.endsWith(".jpg")) {
-                Image image = new Image();
-                image.setAlbum(album);
-                image.setPortfolio(portfolio);
-                image.setUrl(link);
-                image.setWidth(width);
-                image.setHeight(height);
-                image.setAlt(alt);
-                image.setAuthor(author);
-                listImages.add(image);
-            }
-        }
-
-        album.setImages(listImages);
-
-        return listImages;
-    }
-
 
 }
