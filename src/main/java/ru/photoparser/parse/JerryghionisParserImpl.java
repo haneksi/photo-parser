@@ -5,22 +5,28 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 import ru.photoparser.entity.Album;
 import ru.photoparser.entity.Image;
 import ru.photoparser.entity.Portfolio;
 import ru.photoparser.util.ParserManagement;
 
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 
+@Service("jerryghionisParser")
+@Scope("singleton")
 public class JerryghionisParserImpl implements Parser{
     private final String URL = "http://www.jerryghionisphotography.com";
     private final Document document = ParserManagement.getDocument(URL);
     private final String author = document.title();
 
-//    @Qualifier("portfolio")
-//    @Autowired
-    private Portfolio portfolio = new Portfolio();
+    @Qualifier("portfolio")
+    @Autowired
+    private Portfolio portfolio;
 
     public JerryghionisParserImpl() {
     }
@@ -39,12 +45,14 @@ public class JerryghionisParserImpl implements Parser{
 
     @Override
     public Portfolio parsing() {
+        List<Album> albumsList = new ArrayList<Album>();
         this.portfolio.setUrl(URL);
-        this.portfolio.setUrl(author);
-        StringBuilder urlAlbums = new StringBuilder(URL).append("/wedding-gallery");
+        this.portfolio.setAuthor(author);
+
+        StringBuilder urlAlbums = new StringBuilder(URL).append("/wedding-albums");
         Document docAlbums = ParserManagement.getDocument(urlAlbums.toString());
-        Element tableAlbums = docAlbums.select("div.GGRedactorContent GGTextContent  SelectionEnabled").get(0);
-        Elements albums = tableAlbums.getElementsByTag("a");
+        Elements albums = docAlbums.select("table.GGResponsiveTable").get(0).getElementsByTag("a");
+
         for (Element element : albums) {
             StringBuilder urlAlbum = new StringBuilder(URL);
             String href = element.attr("href");
@@ -57,22 +65,40 @@ public class JerryghionisParserImpl implements Parser{
             album.setPortfolio(portfolio);
             List<Image> images = getImagesToAlbum(album);
             album.setImages(images);
+            albumsList.add(album);
         }
+        portfolio.setAlbums(albumsList);
         return portfolio;
     }
 
     private List<Image> getImagesToAlbum(Album album) {
+        List<Image> list = new ArrayList<>();
+        Deque<Image> deque = new ArrayDeque<>();
+
         Document document = ParserManagement.getDocument(album.getUrl());
+        while(true) {
+            String currentImageLink = document.select("meta[content$=.jpg]").get(0).attr("content");
+            Image image = new Image();
+            image.setAuthor(author);
+            image.setAlbum(album);
+            image.setPortfolio(portfolio);
+            image.setAlt("");
+            image.setHeight("");
+            image.setWidth("");
+            image.setUrl(currentImageLink);
+            if(deque.contains(image)){
+                break;
+            } else {
+                deque.add(image);
+                StringBuilder nextImageLink = new StringBuilder();
+                nextImageLink.append(URL).append(document.select("a.next").get(0).attr("href"));
+                document = ParserManagement.getDocument(nextImageLink.toString());
+            }
+        }
 
-        Element linkToImage = document.select("meta[content$=.jpg]").get(0);
-        String linkCurrentImage = linkToImage.val();
+        list.addAll(deque);
 
-
-        return null;
+        return list;
     }
 
-    public static void main(String[] args) {
-        JerryghionisParserImpl parser = new JerryghionisParserImpl();
-        parser.parsing().toString();
-    }
 }
