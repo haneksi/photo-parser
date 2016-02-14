@@ -25,7 +25,7 @@ public class KellyandsergioParserImpl implements Parser{
 
     @Qualifier("portfolio")
     @Autowired
-    private Portfolio portfolio = new Portfolio();
+    private Portfolio portfolio;
 
     public KellyandsergioParserImpl() {
     }
