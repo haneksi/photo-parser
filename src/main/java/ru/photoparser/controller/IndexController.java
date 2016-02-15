@@ -11,6 +11,8 @@ import ru.photoparser.entity.Album;
 import ru.photoparser.entity.Image;
 import ru.photoparser.entity.Portfolio;
 import ru.photoparser.parse.EdpeersParserImpl;
+import ru.photoparser.parse.Parser;
+import ru.photoparser.parse.TinydotphotographyParserImpl;
 import ru.photoparser.service.PortfolioService;
 
 import java.util.ArrayList;
@@ -19,19 +21,18 @@ import java.util.List;
 @Controller
 public class IndexController {
 
-
-    @Qualifier("edpeersParser")
-    @Autowired
-    private EdpeersParserImpl edpeersParser;
-
     @Qualifier("portfolioService")
     @Autowired
     private PortfolioService portfolioService;
 
+    @Qualifier("erichmcveyParser")
+    @Autowired
+    private Parser parser;
+
 
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public String printHello(ModelMap model) {
-        Portfolio portfolio = edpeersParser.getPortfolio();
+        Portfolio portfolio = parser.parsing();
         List<Album> albums = portfolio.getAlbums();
         List<Image> images = new ArrayList<>();
         for (Album album : albums) {
@@ -39,6 +40,8 @@ public class IndexController {
         }
 
         model.addAttribute("images",  images);
+
+        System.out.println(portfolio.toString());
 
         return "index";
     }
