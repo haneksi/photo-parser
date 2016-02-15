@@ -1,6 +1,5 @@
 package ru.photoparser.controller;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -10,9 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.photoparser.entity.Album;
 import ru.photoparser.entity.Image;
 import ru.photoparser.entity.Portfolio;
-import ru.photoparser.parse.EdpeersParserImpl;
 import ru.photoparser.parse.Parser;
-import ru.photoparser.parse.TinydotphotographyParserImpl;
 import ru.photoparser.service.PortfolioService;
 
 import java.util.ArrayList;
@@ -25,7 +22,7 @@ public class IndexController {
     @Autowired
     private PortfolioService portfolioService;
 
-    @Qualifier("erichmcveyParser")
+    @Qualifier("twomannParser")
     @Autowired
     private Parser parser;
 
