@@ -37,11 +37,14 @@ public class Image{
     public Image() {
     }
 
-    public Image(String url, String width, String height, String alt) {
+    public Image(String url, String author, String width, String height, String alt, Portfolio portfolio, Album album) {
         this.url = url;
+        this.author = author;
         this.width = width;
         this.height = height;
         this.alt = alt;
+        this.portfolio = portfolio;
+        this.album = album;
     }
 
     public Integer getId() {

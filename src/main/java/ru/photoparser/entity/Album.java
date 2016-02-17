@@ -34,9 +34,11 @@ public class Album{
     public Album() {
     }
 
-    public Album(String url, String title) {
+    public Album(String url, String author, String title, Portfolio portfolio) {
         this.url = url;
+        this.author = author;
         this.title = title;
+        this.portfolio = portfolio;
     }
 
     public Integer getId() {
