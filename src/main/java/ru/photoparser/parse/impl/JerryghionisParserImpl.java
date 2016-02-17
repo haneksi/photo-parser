@@ -1,4 +1,4 @@
-package ru.photoparser.parse;
+package ru.photoparser.parse.impl;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ru.photoparser.entity.Album;
 import ru.photoparser.entity.Image;
 import ru.photoparser.entity.Portfolio;
+import ru.photoparser.parse.Parser;
 import ru.photoparser.util.ParserManagement;
 
 import java.util.ArrayDeque;
@@ -19,7 +20,7 @@ import java.util.List;
 
 @Service("jerryghionisParser")
 @Scope("singleton")
-public class JerryghionisParserImpl implements Parser{
+public class JerryghionisParserImpl implements Parser {
     private final String URL = "http://www.jerryghionisphotography.com";
     private final Document document = ParserManagement.getDocument(URL);
     private final String author = document.title();

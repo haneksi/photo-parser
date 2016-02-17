@@ -1,4 +1,4 @@
-package ru.photoparser.parse;
+package ru.photoparser.parse.impl;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,15 +10,16 @@ import org.springframework.stereotype.Service;
 import ru.photoparser.entity.Album;
 import ru.photoparser.entity.Image;
 import ru.photoparser.entity.Portfolio;
+import ru.photoparser.parse.Parser;
 import ru.photoparser.util.ParserManagement;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("jeffascoughParser")
+@Service("erichmcveyParser")
 @Scope("singleton")
-public class JeffascoughParserImpl implements Parser{
-    private final String URL = "http://www.jeffascough.com/";
+public class ErichmcveyParserImpl implements Parser {
+    private final String URL = "http://www.erichmcvey.com";
     private final Document document = ParserManagement.getDocument(URL);
     private final String author = document.title();
 
@@ -26,11 +27,7 @@ public class JeffascoughParserImpl implements Parser{
     @Autowired
     private Portfolio portfolio;
 
-    public JeffascoughParserImpl() {
-    }
-
-    public String getURL() {
-        return URL;
+    public ErichmcveyParserImpl() {
     }
 
     public Portfolio getPortfolio() {
@@ -41,23 +38,29 @@ public class JeffascoughParserImpl implements Parser{
         this.portfolio = portfolio;
     }
 
+    public String getURL() {
+        return URL;
+    }
+
     @Override
     public Portfolio parsing() {
         portfolio.setUrl(URL);
         portfolio.setAuthor(author);
         List<Album> albums = new ArrayList<Album>();
-        Elements albumsElements = document.select("div.text-below").select("a[href]");
+        Elements albumsElements = document.select("div#gallery-4").get(0).select("a[href]");
         for (Element albumElement : albumsElements) {
             String albumUrl = albumElement.attr("href");
-            String title = albumElement.text();
+            String title = albumElement.select("img[src]").get(0).attr("alt");
 
-            Album album = new Album();
-            album.setTitle(title);
-            album.setUrl(albumUrl);
-            album.setAuthor(author);
-            album.setPortfolio(portfolio);
-            album.setImages(getImagesToAlbum(album));
-            albums.add(album);
+            if(!albumUrl.endsWith(".jpg")) {
+                Album album = new Album();
+                album.setTitle(title);
+                album.setUrl(albumUrl);
+                album.setAuthor(author);
+                album.setPortfolio(portfolio);
+                album.setImages(getImagesToAlbum(album));
+                albums.add(album);
+            }
         }
 
         portfolio.setAlbums(albums);
@@ -68,14 +71,9 @@ public class JeffascoughParserImpl implements Parser{
         Document doc = ParserManagement.getDocument(album.getUrl());
         List<Image> listImages = new ArrayList<Image>();
 
-        Elements imagesElements = doc.select("[data-role=content]").get(0).select("img[src]");
+        Elements imagesElements = doc.select("div.slideshow_content").get(0).select("img[src]");
         for (Element imageElement : imagesElements) {
-
             String imageUrl = imageElement.attr("src");
-            if(!imageUrl.endsWith(".jpg")){
-                imageUrl = imageElement.attr("data-lazyload-src");
-            }
-
             String width = imageElement.attr("width");
             String height = imageElement.attr("height");
             String alt = imageElement.attr("alt");
@@ -91,7 +89,6 @@ public class JeffascoughParserImpl implements Parser{
 
             listImages.add(image);
         }
-
         return listImages;
     }
 }

@@ -1,4 +1,4 @@
-package ru.photoparser.parse;
+package ru.photoparser.parse.impl;
 
 
 import org.jsoup.nodes.Document;
@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import ru.photoparser.entity.Album;
 import ru.photoparser.entity.Image;
 import ru.photoparser.entity.Portfolio;
+import ru.photoparser.parse.Parser;
 import ru.photoparser.util.ParserManagement;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.List;
 
 @Service("kellyandsergioParser")
 @Scope("singleton")
-public class KellyandsergioParserImpl implements Parser{
+public class KellyandsergioParserImpl implements Parser {
     private final String URL = "http://www.kellyandsergio.com/blog/";
     private final Document document = ParserManagement.getDocument(URL);
     private final String author = document.title();
