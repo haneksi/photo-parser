@@ -15,37 +15,37 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("tinydotphotographyParser")
+@Service("levkupermanParser")
 @Scope("singleton")
-public class TinydotphotographyParser extends AbstractParserImpl {
+public class LevkupermanParser extends AbstractParserImpl {
 
-    public TinydotphotographyParser() {
+    public LevkupermanParser() {
     }
 
     @Override
     public Portfolio parsing() {
 
-        Elements categoriesElements = getDocument().select("div#l")
-                                                   .select("a[href]");
+        StringBuilder linkToWeddingAlbums = new StringBuilder(getURL()).append("/featured-weddings/");
+        StringBuilder linkToEngagementAlbums = new StringBuilder(getURL()).append("/featured-engagement-sessions/");
 
-        if (notNull(categoriesElements)) {
-            for (Element category : categoriesElements) {
-                String categoryUrl = category.attr("href");
+        if (notNullAndNotIsEmpty(linkToWeddingAlbums.toString(), linkToEngagementAlbums.toString())) {
 
-                if (notNullAndNotIsEmpty(categoryUrl)) {
+            for (int i = 0; i < 2; i++) {
+                if (i==0) {
+                    setDocument(ParserManagement.getDocument(linkToWeddingAlbums.toString()));
+                }
 
-                    setDocument(ParserManagement.getDocument(categoryUrl));
-
-                    Elements albumsElements = getDocument().select("div.entry-thumb");
+                if (notNull(getDocument())) {
+                    Elements albumsElements = getDocument().select("div.text-wrap");
 
                     if (notNull(albumsElements)) {
                         for (Element albumElement : albumsElements) {
 
-                            String albumUrl = albumElement.select("a[href]")
+                            String albumUrl = albumElement.select("a[href]").get(0)
                                                           .attr("href");
 
-                            String title = albumElement.select("img[alt]")
-                                                       .attr("alt");
+                            String title = albumElement.select("a[href]").get(0)
+                                                       .attr("title");
 
                             if (notNullAndNotIsEmpty(albumUrl,title)) {
                                 Album album = new Album(albumUrl, getAuthor(), title, getPortfolio());
@@ -55,6 +55,8 @@ public class TinydotphotographyParser extends AbstractParserImpl {
                         }
                     }
                 }
+
+                setDocument(ParserManagement.getDocument(linkToEngagementAlbums.toString()));
             }
         }
 
@@ -64,24 +66,14 @@ public class TinydotphotographyParser extends AbstractParserImpl {
 
     @Override
     protected List<Image> getImagesToAlbum(Album album) {
-
-        setImagesList(new ArrayList<Image>());
-        setDocument(ParserManagement.getDocument(album.getUrl()));
-
-        if (notNull(getDocument())) {
-            Elements imagesElements = getDocument().select("div#content").get(0)
-                                                   .getElementsByTag("img");
-
-            addImagesToAlbum(imagesElements, "src", "width", "height", "alt", album);
-        }
-
-        return getImagesList();
+        return getImagesToAlbum(album, getPortfolio(), getAuthor());
     }
 
-    @Override
     @PostConstruct
+    @Override
     protected void init() {
-        this.setURL("http://www.tinydotphotography.com/");
+        this.setURL("http://www.levkuperman.com");
         super.init();
+        this.setAuthor(getDocument().select("meta[property=og:title]").get(0).attr("content"));
     }
 }

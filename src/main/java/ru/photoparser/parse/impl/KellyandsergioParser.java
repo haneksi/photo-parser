@@ -1,5 +1,6 @@
 package ru.photoparser.parse.impl;
 
+
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.context.annotation.Scope;
@@ -14,38 +15,37 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("loveisabigdealParser")
+@Service("kellyandsergioParser")
 @Scope("singleton")
-public class LoveisabigdealParser extends AbstractParserImpl {
+public class KellyandsergioParser extends AbstractParserImpl {
 
-    public LoveisabigdealParser() {
+
+    public KellyandsergioParser() {
     }
-
 
     @Override
     public Portfolio parsing() {
-        Elements categoriesElements = getDocument().select("li[class^=cat-item cat-item-]");
+
+        Elements categoriesElements = getDocument().select("ul.search-bar-cats").get(0)
+                                                   .select("a[href]");
 
         if (notNull(categoriesElements)) {
             for (Element categoryElement : categoriesElements) {
-
-                String categoryUrl = categoryElement.select("a[href]").get(0)
-                                                    .attr("href");
+                String categoryUrl = categoryElement.attr("href");
 
                 if (notNullAndNotIsEmpty(categoryUrl)) {
-
                     setDocument(ParserManagement.getDocument(categoryUrl));
 
                     if (notNull(getDocument())) {
-
-                        Elements albumsElements = getDocument().select("div.text-below")
-                                                               .select("h3")
-                                                               .select("a[href]");
+                        Elements albumsElements = getDocument().select("section.post");
 
                         if (notNull(albumsElements)) {
                             for (Element albumElement : albumsElements) {
-                                String albumUrl = albumElement.attr("href");
-                                String title = albumElement.attr("title");
+                                String albumUrl = albumElement.select("a[href]").get(0)
+                                                              .attr("href");
+
+                                String title = albumElement.select("a[href]").get(0)
+                                                           .attr("title");
 
                                 if (notNullAndNotIsEmpty(albumUrl,title)) {
                                     Album album = new Album(albumUrl, getAuthor(), title, getPortfolio());
@@ -57,22 +57,27 @@ public class LoveisabigdealParser extends AbstractParserImpl {
                     }
                 }
             }
-            getPortfolio().setAlbums(getAlbumsList());
         }
+
+        getPortfolio().setAlbums(getAlbumsList());
         return getPortfolio();
     }
 
     @Override
     protected List<Image> getImagesToAlbum(Album album) {
-
         setImagesList(new ArrayList<Image>());
         setDocument(ParserManagement.getDocument(album.getUrl()));
 
         if (notNull(getDocument())) {
-            Elements imagesElements = getDocument().select("[data-role=content]").get(0)
-                                                   .select("img[src]");
+            Elements imagesElements = getDocument().select("div.post-main").get(0)
+                                                   .select("img[src$=.jpg]");
 
             addImagesToAlbum(imagesElements, "src", "width", "height", "alt", album);
+
+            imagesElements = getDocument().getElementsByAttribute("data-original");
+
+            addImagesToAlbum(imagesElements, "data-original", "width", "height", "alt", album);
+
         }
 
         return getImagesList();
@@ -80,10 +85,8 @@ public class LoveisabigdealParser extends AbstractParserImpl {
 
     @PostConstruct
     @Override
-    protected void init(){
-
-        this.setURL("http://www.loveisabigdeal.com/");
+    protected void init() {
+        setURL("http://www.kellyandsergio.com/blog/");
         super.init();
     }
-
 }

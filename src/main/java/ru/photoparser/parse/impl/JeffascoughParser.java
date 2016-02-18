@@ -14,26 +14,21 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("twomannParser")
+@Service("jeffascoughParser")
 @Scope("singleton")
-public class TwomannParser extends AbstractParserImpl {
+public class JeffascoughParser extends AbstractParserImpl{
 
-    public TwomannParser() {
+    public JeffascoughParser() {
     }
 
     @Override
     public Portfolio parsing() {
-        Elements albumsElements = getDocument().select("div.entry-content").get(0)
-                                               .select("li.thumbnail");
-
+        Elements albumsElements = getDocument().select("div.text-below")
+                                               .select("a[href]");
         if (notNull(albumsElements)) {
             for (Element albumElement : albumsElements) {
-
-                String albumUrl = albumElement.select("a.thumbnail-glass").get(0)
-                                              .attr("href");
-
-                String title = albumElement.select("div.thumbnail-caption").get(0)
-                                           .text();
+                String albumUrl = albumElement.attr("href");
+                String title = albumElement.text();
 
                 if (notNullAndNotIsEmpty(albumUrl, title)) {
                     Album album = new Album(albumUrl, getAuthor(), title, getPortfolio());
@@ -54,20 +49,35 @@ public class TwomannParser extends AbstractParserImpl {
         setDocument(ParserManagement.getDocument(album.getUrl()));
 
         if (notNull(getDocument())) {
-            Elements imagesElements = getDocument().select("div.entry-content").get(0)
-                                                   .getElementsByAttribute("data-src1320");
+            Elements imagesElements = getDocument().select("[data-role=content]").get(0)
+                                                   .select("img[src]");
 
-            addImagesToAlbum(imagesElements, "data-src1320", "width", "height", "alt", album);
+            if (notNull(imagesElements)) {
+                for (Element imageElement : imagesElements) {
+
+                    String imageUrl = imageElement.attr("src");
+                    if(!imageUrl.endsWith(".jpg")){
+                        imageUrl = imageElement.attr("data-lazyload-src");
+                    }
+
+                    String width = imageElement.attr("width");
+                    String height = imageElement.attr("height");
+                    String alt = imageElement.attr("alt");
+
+                    if(notNullAndNotIsEmpty(imageUrl) && imageUrl.endsWith(".jpg")) {
+                        getImagesList().add(new Image(imageUrl, getAuthor(), width, height, alt, getPortfolio(), album));
+                    }
+                }
+            }
         }
+
         return getImagesList();
     }
 
-    @Override
     @PostConstruct
+    @Override
     protected void init() {
-
-        this.setURL("http://twomann.com/weddings/");
+        setURL("http://www.jeffascough.com/");
         super.init();
-
     }
 }

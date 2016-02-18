@@ -14,28 +14,26 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("twomannParser")
+@Service("erichmcveyParser")
 @Scope("singleton")
-public class TwomannParser extends AbstractParserImpl {
+public class ErichmcveyParser extends AbstractParserImpl {
 
-    public TwomannParser() {
+    public ErichmcveyParser() {
     }
 
     @Override
     public Portfolio parsing() {
-        Elements albumsElements = getDocument().select("div.entry-content").get(0)
-                                               .select("li.thumbnail");
 
+        Elements albumsElements = getDocument().select("div#gallery-4").get(0)
+                                               .select("a[href]");
         if (notNull(albumsElements)) {
             for (Element albumElement : albumsElements) {
+                String albumUrl = albumElement.attr("href");
 
-                String albumUrl = albumElement.select("a.thumbnail-glass").get(0)
-                                              .attr("href");
+                String title = albumElement.select("img[src]").get(0)
+                                           .attr("alt");
 
-                String title = albumElement.select("div.thumbnail-caption").get(0)
-                                           .text();
-
-                if (notNullAndNotIsEmpty(albumUrl, title)) {
+                if(!albumUrl.endsWith(".jpg")) {
                     Album album = new Album(albumUrl, getAuthor(), title, getPortfolio());
                     album.setImages(getImagesToAlbum(album));
                     getAlbumsList().add(album);
@@ -54,20 +52,18 @@ public class TwomannParser extends AbstractParserImpl {
         setDocument(ParserManagement.getDocument(album.getUrl()));
 
         if (notNull(getDocument())) {
-            Elements imagesElements = getDocument().select("div.entry-content").get(0)
-                                                   .getElementsByAttribute("data-src1320");
-
-            addImagesToAlbum(imagesElements, "data-src1320", "width", "height", "alt", album);
+            Elements imagesElements = getDocument().select("div.slideshow_content").get(0)
+                                                   .select("img[src]");
+            addImagesToAlbum(imagesElements, "src", "width", "height", "alt", album );
         }
+
         return getImagesList();
     }
 
-    @Override
     @PostConstruct
+    @Override
     protected void init() {
-
-        this.setURL("http://twomann.com/weddings/");
+        setURL("http://www.erichmcvey.com");
         super.init();
-
     }
 }

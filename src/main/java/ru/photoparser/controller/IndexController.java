@@ -22,7 +22,7 @@ public class IndexController {
     @Autowired
     private PortfolioService portfolioService;
 
-    @Qualifier("loveisabigdealParser")
+    @Qualifier("twomannParser")
     @Autowired
     private Parser parser;
 
@@ -38,7 +38,7 @@ public class IndexController {
 
         model.addAttribute("images",  images);
 
-        System.out.println(portfolio.toString());
+        portfolioService.create(portfolio);
 
         return "index";
     }

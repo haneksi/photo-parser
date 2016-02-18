@@ -2,6 +2,8 @@ package ru.photoparser.parse;
 
 
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ru.photoparser.entity.Album;
@@ -17,7 +19,7 @@ public abstract class AbstractParserImpl implements Parser{
     private Document document;
     private String author;
     private List<Album> albumsList = new ArrayList<Album>();
-    private ArrayList<Image> imagesList = new ArrayList<>();
+    private ArrayList<Image> imagesList;
 
     @Qualifier("portfolio")
     @Autowired
@@ -71,8 +73,6 @@ public abstract class AbstractParserImpl implements Parser{
         this.imagesList = imagesList;
     }
 
-    protected abstract List<Image> getImagesToAlbum(Album album);
-
     protected void init(){
 
         this.setDocument(ParserManagement.getDocument(getURL()));
@@ -92,5 +92,53 @@ public abstract class AbstractParserImpl implements Parser{
 
     protected boolean notNull(Object object){
         return object!=null;
+    }
+
+
+    protected abstract List<Image> getImagesToAlbum(Album album);
+
+    protected List<Image> getImagesToAlbum(Album album, Portfolio portfolio, String author){
+
+        setImagesList(new ArrayList<Image>());
+        setDocument(ParserManagement.getDocument(album.getUrl()));
+
+        if (notNull(getDocument()) && notNull(portfolio) && notNullAndNotIsEmpty(author)) {
+            Elements imagesElements = getDocument().select("div#content").get(0)
+                                                   .select("img[src$=.jpg]");
+
+            addImagesToAlbum(imagesElements, "src", "width", "height", "alt", album);
+
+            imagesElements = getDocument().getElementsByAttribute("data-lazyload-src");
+            addImagesToAlbum(imagesElements, "data-lazyload-src", "width", "height", "alt", album);
+        }
+
+        return getImagesList();
+    }
+
+    protected void addImagesToAlbum(Elements imagesElements,
+                                    String imageUrlAttr,
+                                    String widthAttr,
+                                    String heightAttr,
+                                    String altAttr,
+                                    Album album){
+        if (notNull(imagesElements)) {
+            for (Element element : imagesElements){
+                String imageUrl = element.attr(imageUrlAttr);
+                String width = element.attr(widthAttr);
+                String height = element.attr(heightAttr);
+                String alt = element.attr(altAttr);
+
+                if(notNullAndNotIsEmpty(imageUrl) && imageUrl.endsWith(".jpg")) {
+                    if(!notNullAndNotIsEmpty(width,height,alt)){
+                        width = "0";
+                        height = "0";
+                        alt = "null";
+                    }
+                    getImagesList().add(new Image(imageUrl, getAuthor(), width, height, alt, getPortfolio(), album));
+                }
+            }
+        }
+
+
     }
 }
