@@ -11,9 +11,7 @@ import ru.photoparser.parse.AbstractParserImpl;
 import ru.photoparser.util.ParserManagement;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.List;
 
 @Service("jerryghionisParser")
@@ -56,12 +54,12 @@ public class JerryghionisParser extends AbstractParserImpl {
     @Override
     protected List<Image> getImagesToAlbum(Album album) {
 
-        Deque<Image> deque = new ArrayDeque<>();
-
         setImagesList(new ArrayList<Image>());
         setDocument(ParserManagement.getDocument(album.getUrl()));
 
         if (notNull(getDocument())) {
+
+            String validateUrl=null;
             while(true) {
                 String currentImageUrl = getDocument().select("meta[content$=.jpg]").get(0)
                                                       .attr("content");
@@ -69,20 +67,23 @@ public class JerryghionisParser extends AbstractParserImpl {
                 if (notNullAndNotIsEmpty(currentImageUrl)) {
                     Image image = new Image(currentImageUrl, getAuthor(),"0","0","null",getPortfolio(),album);
 
-                    if(deque.contains(image)){
-                        break;
-                    } else {
-                        deque.add(image);
-                        StringBuilder nextImageUrl = new StringBuilder();
-                        nextImageUrl.append(getURL()).append(getDocument().select("a.next").get(0)
-                                                                          .attr("href"));
 
-                        setDocument(ParserManagement.getDocument(nextImageUrl.toString()));
+
+                    if(currentImageUrl.equals(validateUrl)){
+                        break;
                     }
+
+                    validateUrl = currentImageUrl;
+                    getImagesList().add(image);
+
+                    StringBuilder nextImageUrl = new StringBuilder();
+                    nextImageUrl.append(getURL()).append(getDocument().select("a.next").get(0)
+                                                                      .attr("href"));
+                    setDocument(ParserManagement.getDocument(nextImageUrl.toString()));
+
                 }
             }
 
-            getImagesList().addAll(deque);
         }
 
         return getImagesList();

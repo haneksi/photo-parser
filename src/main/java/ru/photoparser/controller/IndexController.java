@@ -22,7 +22,7 @@ public class IndexController {
     @Autowired
     private PortfolioService portfolioService;
 
-    @Qualifier("twomannParser")
+    @Qualifier("jerryghionisParser")
     @Autowired
     private Parser parser;
 

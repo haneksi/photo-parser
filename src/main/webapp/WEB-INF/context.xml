@@ -8,10 +8,8 @@
 
     <context:component-scan base-package="ru.photoparser.dao"/>
     <context:component-scan base-package="ru.photoparser.service"/>
-    <context:component-scan base-package="ru.photoparser.parse"/>
+    <context:component-scan base-package="ru.photoparser.parse.impl"/>
 
     <bean id="portfolio" class="ru.photoparser.entity.Portfolio" scope="prototype"/>
-    <bean id="album" class="ru.photoparser.entity.Album" scope="prototype"/>
-    <bean id="image" class="ru.photoparser.entity.Image" scope="prototype"/>
 
 </beans>
