@@ -33,7 +33,7 @@ public class PortfolioDaoImpl implements AbstractDao<Portfolio>{
     @Override
     public void create(Portfolio entyty) {
         Session currentSession = sessionFactory.getCurrentSession();
-        currentSession.persist(entyty);
+        currentSession.saveOrUpdate(entyty);
     }
 
     @Override

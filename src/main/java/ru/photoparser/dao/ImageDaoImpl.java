@@ -32,7 +32,7 @@ public class ImageDaoImpl implements AbstractDao<Image>{
     @Override
     public void create(Image entyty) {
         Session currentSession = sessionFactory.getCurrentSession();
-        currentSession.persist(entyty);
+        currentSession.saveOrUpdate(entyty);
     }
 
     @Override

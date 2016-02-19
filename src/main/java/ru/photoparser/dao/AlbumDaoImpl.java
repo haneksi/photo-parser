@@ -32,7 +32,7 @@ public class AlbumDaoImpl implements AbstractDao <Album> {
     @Override
     public void create(Album entyty) {
         Session currentSession = sessionFactory.getCurrentSession();
-        currentSession.persist(entyty);
+        currentSession.saveOrUpdate(entyty);
     }
 
     @Override
