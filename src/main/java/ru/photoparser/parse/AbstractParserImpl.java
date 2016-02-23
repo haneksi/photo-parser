@@ -128,12 +128,10 @@ public abstract class AbstractParserImpl implements Parser{
                 String height = element.attr(heightAttr);
                 String alt = element.attr(altAttr);
 
-                if(notNullAndNotIsEmpty(imageUrl) && imageUrl.endsWith(".jpg")) {
-                    if(!notNullAndNotIsEmpty(width,height,alt)){
-                        width = "0";
-                        height = "0";
-                        alt = "null";
-                    }
+                if(notNullAndNotIsEmpty(imageUrl) && imageUrl.toLowerCase().endsWith(".jpg")) {
+                    if(!notNullAndNotIsEmpty(width)){width = "0";}
+                    if(!notNullAndNotIsEmpty(height)){height = "0";}
+                    if(!notNullAndNotIsEmpty(alt)){alt = "null";}
                     getImagesList().add(new Image(imageUrl, getAuthor(), width, height, alt, getPortfolio(), album));
                 }
             }

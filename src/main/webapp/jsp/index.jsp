@@ -6,7 +6,7 @@
     <title>PhotoParser</title>
 </head>
 <body>
-<div class = "photo" align="center" style="color: black">
+<div class = "photo" align="center" style="background-color: black">
     <c:forEach var="image" items="${images}" varStatus="varCount" end="20">
         <img src="${image.url}" height="200" />
         <%--<c:if test="${varCount.count % 5 == 0}">--%>

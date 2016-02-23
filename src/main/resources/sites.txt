@@ -29,9 +29,9 @@ www.hughforte.com
 www.studioimpressions.com.au
 www.studiocastillero.com
 www.kissthegroom.com
-www.tylerbranchphoto.com
+www.tylerbranchphoto.com +
 www.jonaspeterson.com
-www.seanflanigan.net
+www.seanflanigan.net +
 www.maxwanger.com
 www.voltronofawesomeness.com
 www.toddhuntermcgaw.com.au
@@ -40,7 +40,7 @@ www.paulliebtpaula.de
 www.samorovan.com
 www.edoardoagresti.it
 www.nordicaphotography.com
-www.ryanbrenizer.com
+www.ryanbrenizer.com +
 www.toddhuntermcgaw.com.au
 www.ourblogoflove.com
 www.rjphoto.com
