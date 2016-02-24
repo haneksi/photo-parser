@@ -24,8 +24,7 @@ public class ErichmcveyParser extends AbstractParserImpl {
     @Override
     public Portfolio parsing() {
 
-        Elements albumsElements = getDocument().select("div#gallery-4").get(0)
-                                               .select("a[href]");
+        Elements albumsElements = getDocument().select("div#content a[href]");
         if (notNull(albumsElements)) {
             for (Element albumElement : albumsElements) {
                 String albumUrl = albumElement.attr("href");
@@ -33,7 +32,7 @@ public class ErichmcveyParser extends AbstractParserImpl {
                 String title = albumElement.select("img[src]").get(0)
                                            .attr("alt");
 
-                if(!albumUrl.endsWith(".jpg")) {
+                if(!albumUrl.endsWith(".jpg") && notNullAndNotIsEmpty(albumUrl,title)) {
                     Album album = new Album(albumUrl, getAuthor(), title, getPortfolio());
                     album.setImages(getImagesToAlbum(album));
                     getAlbumsList().add(album);
@@ -52,7 +51,7 @@ public class ErichmcveyParser extends AbstractParserImpl {
         setDocument(ParserManagement.getDocument(album.getUrl()));
 
         if (notNull(getDocument())) {
-            Elements imagesElements = getDocument().select("div.slideshow_content").get(0)
+            Elements imagesElements = getDocument().select("div#content").get(0)
                                                    .select("img[src]");
             addImagesToAlbum(imagesElements, "src", "width", "height", "alt", album );
         }

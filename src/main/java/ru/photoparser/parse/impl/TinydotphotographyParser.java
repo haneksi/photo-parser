@@ -25,8 +25,7 @@ public class TinydotphotographyParser extends AbstractParserImpl {
     @Override
     public Portfolio parsing() {
 
-        Elements categoriesElements = getDocument().select("div#l")
-                                                   .select("a[href]");
+        Elements categoriesElements = getDocument().select("div#l a[href]");
 
         if (notNull(categoriesElements)) {
             for (Element category : categoriesElements) {

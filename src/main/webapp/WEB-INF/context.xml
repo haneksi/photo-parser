@@ -6,9 +6,22 @@
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="ru.photoparser.dao"/>
-    <context:component-scan base-package="ru.photoparser.service"/>
-    <context:component-scan base-package="ru.photoparser.parse.impl"/>
+    <context:component-scan base-package="ru.photoparser.dao">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Repository" />
+    </context:component-scan>
+
+    <context:component-scan base-package="ru.photoparser.service">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Service" />
+    </context:component-scan>
+
+    <context:component-scan base-package="ru.photoparser.parse.impl">
+        <context:include-filter type="annotation"
+                                expression="org.springframework.stereotype.Service" />
+    </context:component-scan>
+
+    <context:component-scan base-package="ru.photoparser.parse"/>
 
     <bean id="portfolio" class="ru.photoparser.entity.Portfolio" scope="prototype"/>
 

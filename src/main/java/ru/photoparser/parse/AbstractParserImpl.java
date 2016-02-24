@@ -80,6 +80,7 @@ public abstract class AbstractParserImpl implements Parser{
 
         this.portfolio.setUrl(getURL());
         this.portfolio.setAuthor(getAuthor());
+
     };
 
     protected boolean notNullAndNotIsEmpty(String ...text){
