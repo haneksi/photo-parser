@@ -20,6 +20,7 @@ import java.util.List;
 public class LevkupermanParser extends AbstractParserImpl {
 
     public LevkupermanParser() {
+        super();
     }
 
     @Override

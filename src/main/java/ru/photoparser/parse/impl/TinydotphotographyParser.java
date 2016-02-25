@@ -20,6 +20,7 @@ import java.util.List;
 public class TinydotphotographyParser extends AbstractParserImpl {
 
     public TinydotphotographyParser() {
+        super();
     }
 
     @Override

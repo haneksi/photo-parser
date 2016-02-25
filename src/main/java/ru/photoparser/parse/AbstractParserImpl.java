@@ -25,6 +25,9 @@ public abstract class AbstractParserImpl implements Parser{
     @Autowired
     private Portfolio portfolio;
 
+    public AbstractParserImpl() {
+    }
+
     public Portfolio getPortfolio() {
         return portfolio;
     }

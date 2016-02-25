@@ -18,6 +18,7 @@ import java.util.List;
 public class EdpeersParser extends AbstractParserImpl {
 
     public EdpeersParser() {
+        super();
     }
 
 

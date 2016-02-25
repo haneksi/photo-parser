@@ -19,6 +19,7 @@ import java.util.List;
 public class LoveisabigdealParser extends AbstractParserImpl {
 
     public LoveisabigdealParser() {
+        super();
     }
 
 

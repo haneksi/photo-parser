@@ -18,6 +18,7 @@ import java.util.List;
 public class TylerbranchphotoParser extends AbstractParserImpl{
 
     public TylerbranchphotoParser() {
+        super();
     }
 
     @Override

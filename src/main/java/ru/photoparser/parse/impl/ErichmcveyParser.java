@@ -19,6 +19,7 @@ import java.util.List;
 public class ErichmcveyParser extends AbstractParserImpl {
 
     public ErichmcveyParser() {
+        super();
     }
 
     @Override
