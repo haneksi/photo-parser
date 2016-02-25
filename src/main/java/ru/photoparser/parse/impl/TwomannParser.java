@@ -19,7 +19,6 @@ import java.util.List;
 public class TwomannParser extends AbstractParserImpl {
 
     public TwomannParser() {
-        super();
     }
 
     @Override

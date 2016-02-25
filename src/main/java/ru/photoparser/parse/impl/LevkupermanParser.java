@@ -20,7 +20,6 @@ import java.util.List;
 public class LevkupermanParser extends AbstractParserImpl {
 
     public LevkupermanParser() {
-        super();
     }
 
     @Override
@@ -74,7 +73,11 @@ public class LevkupermanParser extends AbstractParserImpl {
     @Override
     protected void init() {
         this.setURL("http://www.levkuperman.com");
-        super.init();
+        this.setDocument(ParserManagement.getDocument(getURL()));
         this.setAuthor(getDocument().select("meta[property=og:title]").get(0).attr("content"));
+
+        this.getPortfolio().setUrl(getURL());
+        this.getPortfolio().setAuthor(getAuthor());
+
     }
 }

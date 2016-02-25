@@ -19,7 +19,6 @@ import java.util.List;
 @Scope("singleton")
 public class AfistfullofboltsParser extends AbstractParserImpl{
     public AfistfullofboltsParser() {
-        super();
     }
 
     @Override

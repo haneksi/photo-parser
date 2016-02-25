@@ -1,6 +1,7 @@
 package ru.photoparser.util;
 
 
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,13 +22,19 @@ public class ParserManagement {
 
     public static Document getDocument(String url) {
         Document doc = null;
-        String userAgent = "Chrome";
+        String userAgent = "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36";
 
-        try {
-            doc = Jsoup.connect(url).userAgent(userAgent).get();
-        } catch (IOException e) {
-            //TODO Added log4j
+        while(doc==null){
+            try {
+                doc = Jsoup.connect(url).userAgent(userAgent).get();
+                Thread.sleep(100);
+            } catch (IOException e) {
+                //TODO Added log4j
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
         return doc;
     }
 

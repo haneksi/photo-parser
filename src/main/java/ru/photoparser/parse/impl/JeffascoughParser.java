@@ -19,7 +19,6 @@ import java.util.List;
 public class JeffascoughParser extends AbstractParserImpl{
 
     public JeffascoughParser() {
-        super();
     }
 
     @Override

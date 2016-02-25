@@ -21,7 +21,6 @@ public class KellyandsergioParser extends AbstractParserImpl {
 
 
     public KellyandsergioParser() {
-        super();
     }
 
     @Override

@@ -17,7 +17,6 @@ import java.util.List;
 @Scope("singleton")
 public class RyanbrenizerParser extends AbstractParserImpl{
     public RyanbrenizerParser() {
-        super();
     }
 
     @Override

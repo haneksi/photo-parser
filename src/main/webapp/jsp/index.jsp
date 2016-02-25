@@ -12,13 +12,13 @@
     <div id="left-menu">
         <c:forEach items="${portfolioList}" var="portfolio">
 
-            ${portfolio.url}
+            <h3>${portfolio.url}</h3>
 
-            <c:forEach items="${portfolio.albums}" var="album">
-                <div id="item-left-menu">
-                    ${album.title}
+                <div id="items-left-menu">
+                    <c:forEach items="${portfolio.albums}" var="album">
+                        ${album.title}
+                    </c:forEach>
                 </div>
-            </c:forEach>
 
         </c:forEach>
     </div>
