@@ -5,22 +5,29 @@
 <head>
     <title>PhotoParser</title>
     <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
-    <script src="/js/left-menu.js" type="text/javascript"></script>
-    <link href="/css/left-menu.css" rel="stylesheet"/>
+    <script src=<c:url value="/js/left-menu.js"/> type="text/javascript"></script>
+    <link href=<c:url value="/css/left-menu.css"/> rel="stylesheet"/>
 </head>
 <body>
-    <div id="left-menu">
+
+    <div class="accordion-container">
+        <h2>Portfolio Collection</h2>
+
         <c:forEach items="${portfolioList}" var="portfolio">
-
-            <h3>${portfolio.url}</h3>
-
-                <div id="items-left-menu">
+            <div class="set">
+                <a href="#">
+                    <b id="header-portfolio">${portfolio.url} </b>
+                    <i class="fa fa-plus"></i>
+                </a>
+                <div class="content">
                     <c:forEach items="${portfolio.albums}" var="album">
-                        ${album.title}
+                        <p>${album.title}</p>
                     </c:forEach>
                 </div>
-
+            </div>
         </c:forEach>
+
     </div>
+
 </body>
 </html>

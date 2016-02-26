@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import ru.photoparser.entity.Portfolio;
 import ru.photoparser.service.PortfolioService;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Controller
