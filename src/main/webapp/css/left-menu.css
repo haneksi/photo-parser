@@ -16,6 +16,7 @@ body{
     border-bottom: 1px solid #ddd;
 }
 .set{
+    text-transform: uppercase;
     position: relative;
     width: 100%;
     height: auto;
@@ -55,6 +56,7 @@ body{
     display:none;
 }
 .content p{
+    text-transform: uppercase;
     padding: 5px 10px;
     border-bottom: 1px solid #ddd;
     margin: 0;
