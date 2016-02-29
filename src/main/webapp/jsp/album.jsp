@@ -9,13 +9,13 @@
 </head>
 <body>
 
-    <c:if test="${!album.images}">
         <div id="content">
+            <ul>
             <c:forEach items="${album.images}" var="image">
-                <p>${image.url}</p>
+                <li><p>${image.url}</p></li>
             </c:forEach>
+            </ul>>
         </div>
-    </c:if>
 
 </body>
 </html>

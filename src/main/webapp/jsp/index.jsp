@@ -24,7 +24,10 @@
                 <div class="content">
                     <c:forEach items="${portfolio.albums}" var="album">
                         <p id ="album-title-accordion">
-                            <a href="/album/${album.id}">${album.title}</a>
+                            <c:url var="albumUrl" value="/album">
+                                <c:param name="id" value="${album.id}"/>
+                            </c:url>
+                            <a href="${albumUrl}">${album.title}</a>
                         </p>
 
                     </c:forEach>
