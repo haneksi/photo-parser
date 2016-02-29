@@ -21,7 +21,7 @@ public class Portfolio{
     @OneToMany(targetEntity = Album.class,
                mappedBy = "portfolio",
                cascade = CascadeType.ALL,
-               fetch = FetchType.LAZY)
+               fetch = FetchType.EAGER)
     private List<Album> albums;
 
     public Portfolio() {

@@ -28,7 +28,7 @@ public class Album{
     @OneToMany(targetEntity = Image.class,
                mappedBy = "album",
                cascade = CascadeType.ALL,
-               fetch = FetchType.LAZY)
+               fetch = FetchType.EAGER)
     private List<Image> images;
 
     public Album() {
