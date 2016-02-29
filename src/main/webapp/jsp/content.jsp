@@ -5,17 +5,19 @@
 
 <html>
 <head>
-    <title>Album</title>
+    <title>${album.title}</title>
 </head>
 <body>
-
-        <div id="content">
-            <ul>
+<%--images--%>
+<c:if test="${album != null}">
+    <div id="content" >
+        <ul>
             <c:forEach items="${album.images}" var="image">
-                <li><p>${image.url}</p></li>
+                <li><img src="${image.url}"/></li>
             </c:forEach>
-            </ul>>
-        </div>
+        </ul>>
+    </div>
+</c:if>
 
 </body>
 </html>

@@ -24,7 +24,7 @@ public class AlbumController {
     public String getAlbumById(@RequestParam("id") int id, ModelMap model){
         Album album = albumService.getById(id);
         model.addAttribute("album", album);
-        return "album";
+        return "home";
     }
 }
 
