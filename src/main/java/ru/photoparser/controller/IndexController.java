@@ -10,8 +10,8 @@ public class IndexController {
 
 
 
-    @RequestMapping(value = "/index", method = RequestMethod.GET)
-    public String printHello(ModelMap model) {
-        return "index";
+    @RequestMapping(path = "/index", method = RequestMethod.GET)
+    public String redirect(ModelMap model) {
+        return "redirect: portfolio/all";
     }
 }

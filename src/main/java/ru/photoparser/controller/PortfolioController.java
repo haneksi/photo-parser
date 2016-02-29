@@ -14,14 +14,15 @@ import java.util.List;
 
 @SessionAttributes(value = "portfolioList")
 @Controller
+@RequestMapping("/portfolio")
 public class PortfolioController {
     @Qualifier("portfolioService")
     @Autowired
     private PortfolioService portfolioService;
 
 
-    @RequestMapping(value = "/portfolio_collection", method = RequestMethod.GET)
-    public String getAllCollection(ModelMap model) {
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
+    public String getAllPortfolio(ModelMap model) {
 
         List<Portfolio> portfolioList = portfolioService.getAll();
         if(portfolioList != null) {
