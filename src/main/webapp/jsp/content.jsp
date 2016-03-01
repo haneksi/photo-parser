@@ -9,14 +9,12 @@
 </head>
 <body>
 <%--images--%>
-<c:if test="${album != null}">
-    <div id="content" >
-        <ul>
+<c:if test="${not empty album}">
+    <section id="gallary" >
             <c:forEach items="${album.images}" var="image">
-                <li><img src="${image.url}"/></li>
+                <img src="${image.url}"/>
             </c:forEach>
-        </ul>>
-    </div>
+    </section>
 </c:if>
 
 </body>
