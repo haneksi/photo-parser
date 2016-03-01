@@ -9,3 +9,4 @@ Array.prototype.forEach.call(listNodes, function(node) {
     }
     node.innerText = newUrl;
 });
+
